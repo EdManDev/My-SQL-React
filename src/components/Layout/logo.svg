@@ -1,0 +1,26 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="38.85" height="38.85" viewBox="0 0 38.85 38.85">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: lime;
+      }
+
+      .cls-2 {
+        fill: #00aeef;
+      }
+
+      .cls-3 {
+        fill: none;
+        stroke: #00aeef;
+        stroke-miterlimit: 10;
+        stroke-width: 0.5px;
+      }
+    </style>
+  </defs>
+  <title>logo</title>
+  <polygon class="cls-1" points="18.23 1.88 18.23 4.61 32.5 10.27 31.19 26.29 33.7 27.49 35.55 8.97 18.23 1.88"/>
+  <polygon class="cls-1" points="17.68 4.06 17.68 4.83 3.3 10.49 4.83 25.42 4.93 26.29 4.28 26.51 2.65 10.16 17.68 4.06"/>
+  <polygon class="cls-2" points="4.83 11.14 18.88 17.14 31.19 10.93 18.01 5.81 4.61 10.93 5.92 26.18 5.26 26.62 3.85 10.49 18.01 5.04 32.06 10.49 30.65 26.51 18.12 35.77 5.26 26.62 5.92 26.18 17.9 34.79 17.9 18.55 4.83 11.14"/>
+  <polyline class="cls-1" points="30.86 26.83 32.28 27.27 18.34 37.95 3.85 27.49 5.15 26.94 18.01 36.09"/>
+  <circle class="cls-3" cx="19.43" cy="19.43" r="19.18"/>
+</svg>
