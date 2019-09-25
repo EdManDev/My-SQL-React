@@ -5,7 +5,8 @@ import {
 	NavDropdown,
 	Form,
 	FormControl,
-	Button
+	Button,
+	Dropdown
 } from "react-bootstrap";
 
 import img2 from "./logo.svg";
@@ -32,15 +33,14 @@ export default class AppNav extends Component {
 					<Navbar.Collapse id="basic-navbar-nav">
 						<Nav className="ml-auto">
 							<Form inline>
-								<Button variant="outline-success">
-									Search{""}
-								</Button>
+								<Button variant="outline-success">Search{""}</Button>
 								<FormControl
 									type="text"
 									placeholder="Search"
 									className="mr-sm-2"
 								/>
 							</Form>
+
 							<Nav.Link>Home</Nav.Link>
 							<Nav.Link>Link</Nav.Link>
 							<Nav.Link style={{ marginRight: -17 }}>
@@ -56,6 +56,7 @@ export default class AppNav extends Component {
 									<NavDropdown.Item>
 										<Link to="/login">Login</Link>
 									</NavDropdown.Item>
+
 									<NavDropdown.Item>
 										<Link to="/singin">SingIn</Link>
 									</NavDropdown.Item>
