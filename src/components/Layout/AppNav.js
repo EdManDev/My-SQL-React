@@ -42,6 +42,8 @@ export default class AppNav extends Component {
 							</Form>
 
 							<Nav.Link>Home</Nav.Link>
+							<Link to="/modal">Modal</Link>
+
 							<Nav.Link>Link</Nav.Link>
 							<Nav.Link style={{ marginRight: -17 }}>
 								<i class="fas fa-user-circle" />
