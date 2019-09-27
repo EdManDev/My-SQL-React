@@ -2,3 +2,21 @@
 	margin-top: 0;
 	padding-bottom: 0;
 }
+
+.IoIosContactOutline {
+	font-size: 200%;
+	color: #636363 !important;
+}
+
+.dropdown-toggle {
+	padding: 0;
+	margin: 0;
+}
+.navbar-toggler {
+	border-color: #fdfdfd00 !important;
+	outline: none;
+}
+
+.navbar-toggler-icon {
+	color: rgba(72, 255, 0, 0.5) !important;
+}

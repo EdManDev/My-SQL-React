@@ -46,7 +46,7 @@ export default class ModalComponents extends Component {
 							Cancel
 						</Button>
 					</ModalFooter>
-				</Modal>{" "}
+				</Modal>
 			</div>
 		);
 	}
