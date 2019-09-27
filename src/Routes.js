@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import SingUp from "./components/SignUp";
 import SingIn from "./components/SingIn";
 import AppNav from "./components/Layout/AppNav";
-import Modal from "./components/Modal";
+import Modal from "./components/ModalComponents";
 
 export default class Routes extends Component {
 	render() {
