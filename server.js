@@ -12,12 +12,13 @@ var config = {
 	database: "react_sql"
 };
 
+// ROOT
 app.get("/", (req, res, next) => {
 	res.send("Hello World!");
 });
 
-//1-) connection to mySQL
-app.use("/retrieve", (req, res, next) => {
+// GET DATA
+app.use("/get", (req, res, next) => {
 	var mysql = require("mysql");
 	var connection = mysql.createConnection(config);
 	// retrieve data in database
@@ -30,6 +31,54 @@ app.use("/retrieve", (req, res, next) => {
 			res.json(results);
 		}
 	});
+});
+
+// CREATE DATA
+app.use("/create", (req, res, next) => {
+	var mysql = require("mysql");
+	var connection = mysql.createConnection(config);
+	// retrieve data in database
+	var sql = "INSERT INTO `products`SET ?";
+	// THAT CAN BE USE
+	// var sql = "INSERT INTO `products`SET `id`=?, `name`=?, `price`=?, `date`=?";
+	connection.query(
+		sql,
+		req.body,
+		// THAT CAN BE USE
+		// [req.body.id, req.body.name, req.body.price, req.body.date],
+		(err, results, fields) => {
+			connection.end();
+			if (err) {
+				next(err);
+			} else {
+				res.json(results);
+			}
+		}
+	);
+});
+
+// DELETE DATA
+app.use("/delete", (req, res, next) => {
+	var mysql = require("mysql");
+	var connection = mysql.createConnection(config);
+	// retrieve data in database
+	var sql =
+		"DELETE  FROM `products` WHERE " +
+		connection.escape(req.bogy.filename) +
+		"=" +
+		connection.escape(req.body.fieldvalue);
+	connection.query(
+		sql,
+		[req.body.filename.req.body.fieldvalue],
+		(err, results, fields) => {
+			connection.end();
+			if (err) {
+				next(err);
+			} else {
+				res.json(results);
+			}
+		}
+	);
 });
 
 // error handling
