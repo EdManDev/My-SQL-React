@@ -18,7 +18,7 @@ app.get("/", (req, res, next) => {
 });
 
 // GET DATA
-app.use("/get", (req, res, next) => {
+app.use("/read", (req, res, next) => {
 	var mysql = require("mysql");
 	var connection = mysql.createConnection(config);
 	// retrieve data in database
