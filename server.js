@@ -1,139 +1,103 @@
-const express = require('express')
-const app = express()
-const mysql = require("mysql")
+const express = require("express");
+const app = express();
 
-// Create connection
-const db = mysql.createConnection({
-  host: "localhost",
-  port: "8889",
-  user: "root",
-  password: "root",
-  database: "nodemysqlDB"
+app.use(express.urlencoded({ extended: true }));
+
+//2-) after we put the var  config of mySQL
+var config = {
+	host: "localhost",
+	port: "8889",
+	user: "root",
+	password: "root",
+	database: "react_sql"
+};
+
+// ROOT
+app.get("/", (req, res, next) => {
+	res.send("Hello World!");
 });
 
-// Connect 
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log("✅ My SQL Connected...");
+// GET DATA
+app.use("/read", (req, res, next) => {
+	var mysql = require("mysql");
+	var connection = mysql.createConnection(config);
+	// retrieve data in database
+	var sql = "SELECT * FROM `products`";
+	connection.query(sql, (err, results, fields) => {
+		connection.end();
+		if (err) {
+			next(err);
+		} else {
+			res.json(results);
+		}
+	});
 });
 
-//--------------------------------------------
-// Create Database // as nodemysqlDB
-//--------------------------------------------
-app.get('/createdb', (req, res) => {
-  let sql = 'CREATE DATABASE nodemysqlDB';
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Database created...");
-  });
+// CREATE DATA
+app.use("/create", (req, res, next) => {
+	var mysql = require("mysql");
+	var connection = mysql.createConnection(config);
+	// retrieve data in database
+	var sql = "INSERT INTO `products`SET ?";
+	// THAT CAN BE USE
+	// var sql = "INSERT INTO `products`SET `id`=?, `name`=?, `price`=?, `date`=?";
+	connection.query(
+		sql,
+		req.body,
+		// THAT CAN BE USE
+		// [req.body.id, req.body.name, req.body.price, req.body.date],
+		(err, results, fields) => {
+			connection.end();
+			if (err) {
+				next(err);
+			} else {
+				res.json(results);
+			}
+		}
+	);
 });
 
-//--------------------------------------------
-// Create Table
-//--------------------------------------------
-app.get('/createposttable', (req, res) => {
-  let sql = 'CREATE TABLE posts( _id int(10) primary key AUTO_INCREMENT, title VARCHAR(255), products VARCHAR(255))';
-  db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Post table created...");
-  });
+// DELETE DATA
+app.use("/delete", (req, res, next) => {
+	var mysql = require("mysql");
+	var connection = mysql.createConnection(config);
+	// retrieve data in database
+	var sql =
+		"DELETE  FROM `products` WHERE " +
+		connection.escape(req.bogy.filename) +
+		"=" +
+		connection.escape(req.body.fieldvalue);
+	connection.query(
+		sql,
+		[req.body.filename.req.body.fieldvalue],
+		(err, results, fields) => {
+			connection.end();
+			if (err) {
+				next(err);
+			} else {
+				res.json(results);
+			}
+		}
+	);
 });
 
-//--------------------------------------------
-// Insert Data
-//--------------------------------------------
-app.get('/addpost', (req, res) => {
-  let post = { title: 'Post One', products: ' this is Post number One' }
-  let sql = "INSERT INTO posts SET ?";
-  let query = db.query(sql, post, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Post 1 Added..");
-  });
+// error handling
+app.use((req, res, next) => {
+	res.send("Sorry, cannot recognize" + req.url);
 });
 
-//--------------------------------------------
-// Insert Data 2
-//--------------------------------------------
-app.get('/addpost2', (req, res) => {
-  let post = { title: 'Post Two', products: ' this is Post number Two' }
-  let sql = "INSERT INTO posts SET ?";
-  let query = db.query(sql, post, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Post 2 Added..");
-  });
+// midleware
+app.use((err, req, res, next) => {
+	res.send("ErrorHandlingMidleware:" + err.message);
 });
 
-//--------------------------------------------
-// Insert Data 2
-//--------------------------------------------
-app.get('/addpost2', (req, res) => {
-  let post = { title: 'Post Two', products: ' this is Post number Two' }
-  let sql = "INSERT INTO posts SET ?";
-  let query = db.query(sql, post, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Post 2 Added..");
-  })
-})
+// const port = process.env.port || 5000;
+// app.listen(port, () => {
+// 	console.log("Example app listening on port  ✅  " + port);
+// });
 
-//--------------------------------------------
-// Select All Posts 
-//--------------------------------------------
-app.get('/getposts', (req, res) => {
-  let sql = "SELECT * FROM posts";
-  let query = db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Posts fetched...");
-  });
-});
-
-//--------------------------------------------
-// Select Single Post 
-//--------------------------------------------
-app.get('/getpost/:id', (req, res) => {
-  let sql = `SELECT * FROM posts WHERE _id = ${req.params.id}`;
-  let query = db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Post fetched...");
-  });
-});
-
-
-//--------------------------------------------
-// Update Post 
-//--------------------------------------------
-app.get('/updatepost/:id', (req, res) => {
-  let newTitle = 'Updated Title Tree';             // added element
-  let newProducts = 'this is Product number Tree'; // added element
-
-  let sql = `UPDATE posts SET title = "${newTitle}" , products = "${newProducts}" WHERE _id = ${req.params.id}`;
-  let query = db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Post Updated...");
-  });
-});
-
-
-//--------------------------------------------
-// Delete Post 
-//--------------------------------------------
-app.get('/deletepost/:id', (req, res) => {
-  let sql = `DELETE FROM posts WHERE _id = ${req.params.id}`;
-  let query = db.query(sql, (err, result) => {
-    if (err) throw err;
-    console.log(result);
-    res.send("Post Deleted...");
-  });
-});
-
-const port = 5000
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// declare in new express
+const port = 5000;
+app.listen(port, () =>
+	console.log(`Example app listening on port ${port} ✅!`)
+);
